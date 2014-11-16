@@ -3,10 +3,14 @@
 
 /* --- Tipos definidos --- */
 
-int aleatorio, contl, contc, l, c, jogada, atual, acao, erro;
+int aleatorio, contl, contc, l, c, i, jogada, atual, acao, erro;
 int tabuleiro[14][14];
 char opcao, comando;
+
+/* --- manipulação de arquivos --- */
+
 FILE *arquivo;
+char url[] = "MeusJogos\\arquivo.txt"; // caminho padrão para salvamento de arquivos
 
 
 
@@ -32,7 +36,7 @@ void exibir_tabela(int l, int c);
  * @param utilização de c para colunas
  */
 void novo_jogo();
-
+void abrir_jogo();
 /* *
  * Inundação de valores em toda tabela
  * @param utilização de l para linhas
@@ -40,7 +44,7 @@ void novo_jogo();
  */
 void inundar();
 
-void ler_matriz(int l, int c);
+ // void ler_matriz(int l, int c);
 
 /* *
  * Salvar a matriz de um jogo

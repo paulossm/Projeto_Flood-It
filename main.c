@@ -2,7 +2,6 @@
 #include "flood.h"
 #include "flood.c"
 
-
 /* **** RASCUNHO DO PROGRAMA QUE SIMULA O JOGO FLOOD IT *
 	*  ITP/PTP - BTI - UFRN - 2014 *
 	*  PAULO SERGIO SILVA DE MENDONCA
@@ -25,10 +24,10 @@ int main( void ){
 		if(acao==110)
 		{
 			novo_jogo();
-			for(jogada = 1; jogada <= 25; jogada++)
+			partida:
+			for(jogada = i;jogada <= 25; jogada++)
 			{
-				printf("\nTentativa: %i/25\n", jogada);
-				printf("Quer salvar o jogo? Digite s\n");
+				printf("\nTentativa: %i/25\nopções: 's' salvar o jogo atual - 'q' encerrar o jogo\n", jogada);
 				printf("seu comando: ");
 				scanf(" %c", &comando);
 				executa((int)comando);
@@ -39,6 +38,8 @@ int main( void ){
 		if(acao==111) {
 			/* CARREGAR UM JOGO ANTERIOR */
 			ler_matriz(14,14);
+			abrir_jogo();
+			goto partida;
 		}
 	return 0;
 }

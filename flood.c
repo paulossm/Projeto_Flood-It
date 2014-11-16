@@ -37,51 +37,57 @@ void novo_jogo()
 {
 	printf("\n\nAqui está o tabuleiro. seu objetivo é preenchê-lo com um único valor começando pelo canto superior esquerdo. você tem 25 tentativas. Boa Sorte!\n");
 	gerar_tabela( 14, 14 );
-	exibir_tabela ( 14, 14);
+	abrir_jogo();
+	i = 1;
+}
+void abrir_jogo()
+{
+	exibir_tabela (14, 14);
 	printf("\n");
 }
 
 void ler_matriz(int l, int c){
-    arquivo = fopen("arquivo.txt","r+");
+    arquivo = fopen(url,"r");
 
-    if(arquivo)
+    if(arquivo != NULL)
     {
-        erro = 0;
         for(contl = 0; contl < l; contl++)
         {
             for(contc = 0; contc < c; contc++)
             {
-            // (!fscanf(arquivo,"%d", &tabuleiro[contl][contc]));
-            //  {
-            //      erro = 1;
-            //      printf("Erro a o ler a entrada (%d,%d) da matriz\n",contl,contc);
-            //        break;
+				fscanf(arquivo,"%d", &tabuleiro[contl][contc]);
+                if(contc < c-1)
+					fscanf(arquivo," ");
+				else
+					fscanf(arquivo,"\n"); 
             }
         }
-
-            if(erro)
-            break;
+        fscanf(arquivo,"%d", &i);
+			fclose(arquivo);
         }
-        fclose(arquivo);
-    }
-    else
+    else 
     {
     printf("Erro ao abrir o arquivo texto para leitura");
     }
+    
 }
 
 void escrever_matriz(int l, int c){
-    arquivo = fopen("arquivo.txt","w+");
-      if(arquivo)
+    arquivo = fopen(url,"w+");
+      if(arquivo != NULL)
       {
         for(contl = 0; contl < l; contl++)
         {
             for(contc = 0; contc < c; contc++)
             {
                 fprintf(arquivo,"%d",tabuleiro[contl][contc]);
+                if(contc < c-1)
+					fprintf(arquivo," ");
+				else
+					fprintf(arquivo,"\n");
             }
-            fprintf(arquivo,"\n");
         }
+		fprintf(arquivo,"%d", jogada);
         fclose(arquivo);
         printf("Jogo SALVO!!");
       }
@@ -90,15 +96,6 @@ void escrever_matriz(int l, int c){
         printf("Erro ao abrir o arquivo texto para escrita");
       }
 }
-
-/* void menu_opcoes()
-{
-	printf("\nMenu de Opções:\n");
-	printf("1,2,3,4,5 > Preencher o tabuleiro com os valores\n");
-	printf("q > sair do jogo\n");
-	printf("s > salvar o jogo\n");
-	printf("o > carregar um jogo\n");
-} */
 
 void executa(int comando)
 {
