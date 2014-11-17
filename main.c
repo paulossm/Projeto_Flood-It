@@ -10,11 +10,12 @@
 
 
 int main( void ){
-
-	printf("\nBem-Vindo ao Flood it!\n");
-	printf("Selecione um dos comandos a seguir:\n\n");
-	printf("'n' Novo Jogo\n");
-	printf("'o' Carregar uma jogada anterior\n");
+	printf("**********************\n");
+	printf("BEM-VINDO AO FLOOD IT!\n");
+	printf("**********************\n");
+	printf("\n(?) Selecione uma entre as opções a seguir:\n");
+	printf("'n' Novo Jogo - ");
+	printf("'o' Carregar um jogo salvo\n");
 
 	do
 	{
@@ -27,7 +28,9 @@ int main( void ){
 			partida:
 			for(jogada = i;jogada <= 25; jogada++)
 			{
-				printf("\nTentativa: %i/25\nopções: 's' salvar o jogo atual - 'q' encerrar o jogo\n", jogada);
+				printf("\n(!) Tentativa: %i/25\n", jogada);
+				printf("------------------\n");
+				printf("(?) Opções: 's' salvar o jogo atual - 'q' encerrar o jogo\n");
 				printf("seu comando: ");
 				scanf(" %c", &comando);
 				executa((int)comando);
@@ -37,8 +40,7 @@ int main( void ){
 		}
 		if(acao==111) {
 			/* CARREGAR UM JOGO ANTERIOR */
-			ler_matriz(14,14);
-			abrir_jogo();
+			executa(acao);
 			goto partida;
 		}
 	return 0;

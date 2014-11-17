@@ -10,7 +10,7 @@ char opcao, comando;
 /* --- manipulação de arquivos --- */
 
 FILE *arquivo;
-char url[] = "MeusJogos\\arquivo.txt"; // caminho padrão para salvamento de arquivos
+char url[300] = "MeusJogos\\arquivo.txt"; // caminho padrão para salvamento de arquivos
 
 
 

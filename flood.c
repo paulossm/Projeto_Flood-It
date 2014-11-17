@@ -87,13 +87,13 @@ void escrever_matriz(int l, int c){
 					fprintf(arquivo,"\n");
             }
         }
-		fprintf(arquivo,"%d", jogada);
+		fprintf(arquivo,"%d - número da tentativa", jogada);
         fclose(arquivo);
-        printf("Jogo SALVO!!");
+        printf("(!)Partida salva com sucesso!");
       }
       else
       {
-        printf("Erro ao abrir o arquivo texto para escrita");
+        printf("(!)Erro ao abrir o arquivo texto para escrita");
       }
 }
 
@@ -119,12 +119,42 @@ void executa(int comando)
 		case 53: // comando '5'
 		    inundar(14, 14, tabuleiro, 0, 0, tabuleiro[0][0], 5);
 		    break;
+		case 111: // comando 'o'
+			printf("\n(?) Qual partida deseja carregar?\n");
+			printf("'1' abrir última partida salva na pasta padrão 'MeusJogos/' - '0' definir um endereço de um arquivo\n");
+			printf("seu comando: ");
+			scanf("%d", &comando);
+				if(comando){
+					ler_matriz(14,14);
+					abrir_jogo();
+				}
+				else {
+					printf("\nDigite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n");
+					scanf("%s ", url);
+					ler_matriz(14,14);
+					abrir_jogo();
+				}
+			break;
 		case 113: // comando 'q'
 			printf("\nO jogo está sendo encerrado...\n");
 			exit(1);
 		case 115: // comando 's'
-			escrever_matriz(14,14);
-			exit(1);
+			printf("\n(?) Onde você deseja salvar o arquivo do jogo?\n");
+			printf("'1' salvar na pasta padrão 'MeusJogos/' - '0' definir um local\n");
+			printf("seu comando: ");
+			scanf("%d", &comando);
+				if(comando){
+					escrever_matriz(14,14);
+					printf("\nO jogo está sendo encerrado...\n");
+					exit(1);
+				}
+				else {
+					printf("\nDigite um caminho para guardar o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n");
+					scanf("%s", url);
+					escrever_matriz(14,14);
+					printf("\nO jogo está sendo encerrado...\n");
+					exit(1);
+				}
 			break;
 		default:;
 	}
