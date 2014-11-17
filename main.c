@@ -35,7 +35,7 @@ int main( void ){
 				scanf(" %c", &comando);
 				executa((int)comando);
 					if(erro==1){
-						i--;
+						jogada--;
 						erro = 0;
 					}
 				printf("\n");
