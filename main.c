@@ -34,6 +34,10 @@ int main( void ){
 				printf("seu comando: ");
 				scanf(" %c", &comando);
 				executa((int)comando);
+					if(erro==1){
+						i--;
+						erro = 0;
+					}
 				printf("\n");
 				exibir_tabela(14,14);
 			}

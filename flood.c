@@ -35,7 +35,7 @@ void inundar(int L, int C, int tabuleiro[L][C], int l, int c, int atual, int com
 
 void novo_jogo()
 {
-	printf("\n\nAqui está o tabuleiro. seu objetivo é preenchê-lo com um único valor começando pelo canto superior esquerdo. você tem 25 tentativas. Boa Sorte!\n");
+	printf("\n\n(!)Aqui está o tabuleiro. seu objetivo é preenchê-lo com um único valor começando pelo canto superior esquerdo. você tem 25 tentativas. Boa Sorte!\n");
 	gerar_tabela( 14, 14 );
 	abrir_jogo();
 	i = 1;
@@ -67,7 +67,9 @@ void ler_matriz(int l, int c){
         }
     else 
     {
-    printf("Erro ao abrir o arquivo texto para leitura");
+    printf("\n(!)Erro ao abrir o arquivo texto para leitura. Verifique se o arquivo ou diretório existem.\n");
+    printf("(!)O jogo será encerrado...\n");
+    exit(1);
     }
     
 }
@@ -89,11 +91,13 @@ void escrever_matriz(int l, int c){
         }
 		fprintf(arquivo,"%d - número da tentativa", jogada);
         fclose(arquivo);
-        printf("(!)Partida salva com sucesso!");
+        printf("\n(!)Partida salva com sucesso!");
       }
       else
       {
-        printf("(!)Erro ao abrir o arquivo texto para escrita");
+        printf("(!)Erro ao abrir o arquivo texto para escrita.\n");
+        printf("(!)O jogo será encerrado...\n");
+        exit(1);
       }
 }
 
@@ -121,7 +125,7 @@ void executa(int comando)
 		    break;
 		case 111: // comando 'o'
 			printf("\n(?) Qual partida deseja carregar?\n");
-			printf("'1' abrir última partida salva na pasta padrão 'MeusJogos/' - '0' definir um endereço de um arquivo\n");
+			printf("'1' abrir última partida salva na pasta padrão local - '0' definir um endereço de um arquivo\n");
 			printf("seu comando: ");
 			scanf("%d", &comando);
 				if(comando){
@@ -129,18 +133,18 @@ void executa(int comando)
 					abrir_jogo();
 				}
 				else {
-					printf("\nDigite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n");
-					scanf("%s ", url);
+					printf("\n(?)Digite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n");
+					scanf(" %s", url);
 					ler_matriz(14,14);
 					abrir_jogo();
 				}
 			break;
 		case 113: // comando 'q'
-			printf("\nO jogo está sendo encerrado...\n");
+			printf("\n(!)O jogo está sendo encerrado...\n");
 			exit(1);
 		case 115: // comando 's'
 			printf("\n(?) Onde você deseja salvar o arquivo do jogo?\n");
-			printf("'1' salvar na pasta padrão 'MeusJogos/' - '0' definir um local\n");
+			printf("'1' salvar na pasta padrão local - '0' definir um endereço\n");
 			printf("seu comando: ");
 			scanf("%d", &comando);
 				if(comando){
@@ -156,6 +160,9 @@ void executa(int comando)
 					exit(1);
 				}
 			break;
-		default:;
+		default:
+			printf("(!) comando inválido. tente novamente\n");
+			erro = 1;
+			break;
 	}
 }
