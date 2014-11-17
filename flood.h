@@ -17,14 +17,14 @@ char url[] = "arquivo.txt"; // caminho padrão para salvamento de arquivos
 /* --- Sub-rotinas --- */
 
 /* *
- * Realiza atribuição de valores.
+ * Realiza atribuição de valores na matriz
  * @param utilização de l para linhas
  * @param utilização de c para colunas
  */
 void gerar_tabela(int l, int c);
 
 /* *
- * Realiza a exibição de valores
+ * Realiza a exibição de valores da matriz
  * @param utilização de l para linhas
  * @param utilização de c para colunas
  */
@@ -32,22 +32,34 @@ void exibir_tabela(int l, int c);
 
 /* *
  * Realiza a execução de um novo jogo
- * @param utilização de l para linhas
- * @param utilização de c para colunas
+ * 
+ * 
  */
 void novo_jogo();
-void abrir_jogo();
+
 /* *
- * Inundação de valores em toda tabela
- * @param utilização de l para linhas
- * @param utilização de c para colunas
+ * Realiza a execução de um novo jogo
+ * 
+ * 
+ */
+void abrir_jogo();
+
+/* *
+ * Inundação de valores em toda matriz
+ * 
+ * 
  */
 void inundar();
 
- // void ler_matriz(int l, int c);
+/* *
+ * Realiza a leitura de um jogo salvo
+ * @param utilização de l para linhas
+ * @param utilização de c para colunas
+ */
+void ler_matriz(int l, int c);
 
 /* *
- * Salvar a matriz de um jogo
+ * Salva a matriz de um jogo
  * @param utilização de l para linhas
  * @param utilização de c para colunas
  */
