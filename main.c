@@ -22,6 +22,7 @@ int main( void ){
 		printf("\nSeu comando: "); scanf(" %c", &opcao);
 		acao = (int)opcao;
 	} while (acao < 110 || acao > 111);
+		
 		if(acao==110)
 		{
 			novo_jogo();
@@ -38,16 +39,19 @@ int main( void ){
 						jogada--;
 						erro = 0;
 					}
-				if(win){ printf("\n\n(!)Você venceu!\n"); exit(1);}
+				if(win){
+					printf("\n\n(!)Você venceu.!\n");
+					exit(1);
+				}
 			}
-			printf("\n\n(!)Você perdeu\n");
+			printf("\n\n(!)Você perdeu.\n");
 		}
-		
-		
-		if(acao==111) {
+		else {
+			if(acao==111) {
 			/* CARREGAR UM JOGO ANTERIOR */
 			executa(acao);
 			goto partida;
+			}
 		}
 	return 0;
 }

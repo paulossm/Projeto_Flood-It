@@ -113,31 +113,28 @@ void trapaceia(int cor){
 
 void percorrer(int L, int C, int referencia)
 {
-	int i, j, contador;
-	for(i=0;i<L;i++)
+	int c, d, contador;
+	for(c=0;c<L;c++)
 	{
-		for(j=0;j<C;j++)
+		for(d=0;d<C;d++)
 		{
-			if(tabuleiro[i][j] == referencia)
+			if(tabuleiro[c][d] == referencia)
 				contador++;
-		
 		}
 	}
 			if(contador == (L * C))
-				win = 1;
+				win = 1; // verdadeiro
 			else
-				win = 0;
+				win = 0; // falso
 }
 
-void executa(int comando)
+void executa (int comando)
 {
 	switch( comando )
 	{
 		case 48: // comando '0'
 		    inundar(14, 14, tabuleiro, 0, 0, tabuleiro[0][0], 0);
-		    
-		    // trapaceia(0); * usada para simular o preenchimento do tabuleiro completo.
-		    
+			trapaceia(0); // --> usada para simular o preenchimento do tabuleiro completo.
 		    printf("\n");
 			exibir_tabela(14,14);
 			percorrer(14,14,0);
