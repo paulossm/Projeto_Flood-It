@@ -21,15 +21,16 @@ void exibir_tabela(int l, int c){
 			printf("%i ", tabuleiro[contl][contc]);
 		}
 	}
+	printf("\n");
 }
 
 void inundar(int L, int C, int tabuleiro[L][C], int l, int c, int atual, int comando ){
-	if(tabuleiro[l][c] == atual) {
+	if(tabuleiro[l][c] == atual && comando != atual) {
 		tabuleiro[l][c] = comando;
-		if(l < 14){ inundar(14, 14, tabuleiro, l + 1, c, atual, comando); }
-		if(l > 0) { inundar(14, 14, tabuleiro, l - 1, c, atual, comando); }
-		if(c < 14){ (inundar(14, 14, tabuleiro, l, c + 1, atual, comando)); }
-		if(c > 0){ inundar(14, 14, tabuleiro, l, c - 1, atual, comando);}
+		if(l < 14) inundar(14, 14, tabuleiro, l + 1, c, atual, comando);
+		if(l > 0) inundar(14, 14, tabuleiro, l - 1, c, atual, comando);
+		if(c < 14) inundar(14, 14, tabuleiro, l, c + 1, atual, comando);
+		if(c > 0) inundar(14, 14, tabuleiro, l, c - 1, atual, comando);
 	}
 }
 
@@ -37,14 +38,13 @@ void novo_jogo()
 {
 	printf("\n\n(!)Aqui está o tabuleiro. seu objetivo é preenchê-lo com um único valor começando pelo canto superior esquerdo. você tem 25 tentativas. Boa Sorte!\n");
 	gerar_tabela( 14, 14 );
-	abrir_jogo();
+	exibir_tabela(14,14);
 	i = 1;
 }
-void abrir_jogo()
-{
-	exibir_tabela (14, 14);
-	printf("\n");
-}
+//void abrir_jogo()
+//{
+//	exibir_tabela (14, 14);
+//
 
 void ler_matriz(int l, int c){
     arquivo = fopen(url,"r");
@@ -62,7 +62,7 @@ void ler_matriz(int l, int c){
 					fscanf(arquivo,"\n"); 
             }
         }
-        fscanf(arquivo,"%d", &i);
+        fscanf(arquivo,"%d", &jogada);
 			fclose(arquivo);
         }
     else 
@@ -89,7 +89,7 @@ void escrever_matriz(int l, int c){
 					fprintf(arquivo,"\n");
             }
         }
-		fprintf(arquivo,"%d - número da tentativa", jogada);
+		fprintf(arquivo,"%d", jogada);
         fclose(arquivo);
         printf("\n(!)Partida salva com sucesso!");
       }
@@ -101,31 +101,31 @@ void escrever_matriz(int l, int c){
       }
 }
 void trapaceia(int cor){
-	int i, j;
-	for(i=0;i<14;i++)
+	int v, b;
+	for(v=0;v<14;v++)
 	{
-		for(j=0;j<14;j++)
+		for(b=0;b<14;b++)
 		{
-			tabuleiro[i][j] = cor;
+			tabuleiro[v][b] = cor;
 		}
 	}
 }
 
 void percorrer(int L, int C, int referencia)
 {
-	int c, d, contador;
-	for(c=0;c<L;c++)
+	int d, e, contador = 0;
+	for(d=0;d<L;d++)
 	{
-		for(d=0;d<C;d++)
+		for(e=0;e<C;e++)
 		{
-			if(tabuleiro[c][d] == referencia)
+			if(tabuleiro[d][e] == referencia)
 				contador++;
 		}
 	}
 			if(contador == (L * C))
-				win = 1; // verdadeiro
+				cond = 1; // verdadeiro
 			else
-				win = 0; // falso
+				cond = 0; // falso
 }
 
 void executa (int comando)
@@ -133,14 +133,14 @@ void executa (int comando)
 	switch( comando )
 	{
 		case 48: // comando '0'
-		    inundar(14, 14, tabuleiro, 0, 0, tabuleiro[0][0], 0);
-			trapaceia(0); // --> usada para simular o preenchimento do tabuleiro completo.
+		    inundar(14, 14, tabuleiro, 0, 0, tabuleiro[0][0], comando - 48);
+			// trapaceia(0); // --> usada para simular o preenchimento do tabuleiro completo.
+			percorrer(14,14,0);
 		    printf("\n");
 			exibir_tabela(14,14);
-			percorrer(14,14,0);
 		    break;
 		case 49: // comando '1'
-			inundar(14, 14, tabuleiro, 0, 0, tabuleiro[0][0], 1);
+			inundar(14, 14, tabuleiro, 0, 0, tabuleiro[0][0], comando - 48);
 			percorrer(14,14,1);
 			printf("\n");
 			exibir_tabela(14,14);
@@ -172,21 +172,21 @@ void executa (int comando)
 		case 111: // comando 'o'
 			printf("\n(?) Qual partida deseja carregar?\n");
 			printf("'1' abrir última partida salva na pasta padrão local - '0' definir um endereço de um arquivo\n");
+			
 			printf("seu comando: ");
 			scanf("%d", &comando);
 				if(comando){
 					ler_matriz(14,14);
-					abrir_jogo();
+					exibir_tabela(14,14);
 				}
 				else {
 					printf("\n(?)Digite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n");
 					scanf(" %s", url);
 					ler_matriz(14,14);
-					abrir_jogo();
+					exibir_tabela(14,14);
 				}
 				printf("\n");
-				exibir_tabela(14,14);
-			break;
+				break;
 		case 113: // comando 'q'
 			printf("\n(!)O jogo está sendo encerrado...\n");
 			exit(1);
@@ -207,8 +207,6 @@ void executa (int comando)
 					printf("\nO jogo está sendo encerrado...\n");
 					exit(1);
 				}
-				printf("\n");
-				exibir_tabela(14,14);
 			break;
 		default:
 			printf("(!) comando inválido. tente novamente\n");

@@ -3,7 +3,7 @@
 
 /* --- Tipos definidos --- */
 
-int aleatorio, contl, contc, l, c, i, jogada, atual, acao, erro, win;
+int aleatorio, contl, contc, l, c, d, e, i, jogada, atual, acao, erro, cond = 0;
 int tabuleiro[14][14];
 char opcao, comando;
 

@@ -23,11 +23,11 @@ int main( void ){
 		acao = (int)opcao;
 	} while (acao < 110 || acao > 111);
 		
-		if(acao==110)
+		if(acao == 110)
 		{
 			novo_jogo();
 			partida:
-			for(jogada = i;jogada <= 25; jogada++)
+			for(;jogada <= 25; jogada++)
 			{
 				printf("\n(!) Tentativa: %i/25\n", jogada);
 				printf("------------------\n");
@@ -39,7 +39,7 @@ int main( void ){
 						jogada--;
 						erro = 0;
 					}
-				if(win){
+				if(cond==1){
 					printf("\n\n(!)Você venceu.!\n");
 					exit(1);
 				}
