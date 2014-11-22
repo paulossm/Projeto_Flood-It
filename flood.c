@@ -101,18 +101,18 @@ void escrever_matriz(int l, int c){
       }
 }
 
-void percorrer(int L, int C, int referencia)
+void percorrer(int l, int c, int referencia)
 {
 	int contador = 0;
-	for(contl = 0; contl < L; contl++)
+	for(contl = 0; contl < l; contl++)
 	{
-		for(contc=0; contc < C; contc++)
+		for(contc=0; contc < c; contc++)
 		{
 			if(tabuleiro[contl][contc] == referencia)
 				contador++;
 		}
 	}
-			if(contador == (L * C))
+			if(contador == (linhas * colunas))
 				cond = 1; // verdadeiro
 			else
 				cond = 0; // falso
