@@ -123,7 +123,7 @@ void executa (int comando)
 	switch(comando)
 	{
 		case 48: // comando '0'
-		    inundar(linhas, colunas, tabuleiro[linhas][colunas], 0, 0, tabuleiro[0][0], comando - 48);
+		    inundar(linhas, colunas, tabuleiro, 0, 0, tabuleiro[0][0], comando - 48);
 			percorrer(linhas, colunas, comando - 48);
 		    printf("\n");
 			exibir_tabela(linhas, colunas);
