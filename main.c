@@ -9,8 +9,15 @@
 
 
 
+<<<<<<< HEAD
 int main( void )
 {
+=======
+int main( void ){
+	//printf("**********************\n");
+	//printf("BEM-VINDO AO FLOOD IT!\n");
+	//printf("**********************\n");
+>>>>>>> d5ae0920f3e0252141abb83b1af002375285c172
 	printf("******************************\n\n");
 	printf("*** *   **** **** ***    * ***\n");
 	printf("*   *   *  * *  * *  *   *  *\n");
@@ -24,7 +31,11 @@ int main( void )
 	{
 		printf("\nSeu comando: ");
 		scanf(" %c", &opcao);
+<<<<<<< HEAD
 	} while (opcao - 48 < 62 || opcao - 48 > 63);
+=======
+	} while ((int)opcao < 110 || (int)opcao > 111);
+>>>>>>> d5ae0920f3e0252141abb83b1af002375285c172
 
     if((int)opcao == 110)
     {
@@ -38,6 +49,7 @@ int main( void )
             printf("seu comando: ");
             scanf(" %c", &comando);
             executa((int)comando);
+<<<<<<< HEAD
 				if(invalido){
 					jogada--;
 					invalido = 0;
@@ -52,6 +64,22 @@ int main( void )
 
     else{
         // Carregar um Jogo Anterior
+=======
+            if(erro == 1){
+                jogada--;
+                erro = 0;
+            }
+            if(cond == 1){
+                printf("\n\n(!)Você venceu.!\n");
+                exit(1);
+            }
+        }
+        printf("\n\n(!)Você perdeu.\n");
+    }
+
+    else{
+        /* CARREGAR UM JOGO ANTERIOR */
+>>>>>>> d5ae0920f3e0252141abb83b1af002375285c172
         executa((int)opcao);
         goto partida;
     }
