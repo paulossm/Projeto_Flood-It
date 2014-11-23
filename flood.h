@@ -2,9 +2,11 @@
 #define __flood
 
 /* --- Tipos definidos --- */
+#define linhas 14
+#define colunas 14
 
-int aleatorio, contl, contc, l, c, d, e, i, jogada, atual, acao, erro, cond = 0;
-int tabuleiro[14][14];
+int aleatorio, contl, contc, l, c, i, jogada, atual, invalido, venceu, contador, comando_local;
+int tabuleiro[linhas][colunas];
 char opcao, comando;
 
 /* --- manipulação de arquivos --- */
@@ -32,22 +34,22 @@ void exibir_tabela(int l, int c);
 
 /* *
  * Realiza a execução de um novo jogo
- * 
- * 
+ *
+ *
  */
 void novo_jogo();
 
 /* *
  * Realiza a execução de um novo jogo
- * 
- * 
+ *
+ *
  */
 void abrir_jogo();
 
 /* *
  * Inundação de valores em toda matriz
- * 
- * 
+ *
+ *
  */
 void inundar();
 
@@ -65,6 +67,11 @@ void ler_matriz(int l, int c);
  */
 void escrever_matriz(int l, int c);
 
-
+/* *
+ * Percorre a matriz de um jogo para verificação de ganho
+ * @param utilização de l para linhas
+ * @param utilização de c para colunas
+ * @para referencia para o primeiro elemento da matriz
+ */
 void percorrer(int L, int C, int referencia);
 #endif
