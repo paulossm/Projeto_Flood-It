@@ -5,11 +5,7 @@
 #define linhas 14
 #define colunas 14
 
-<<<<<<< HEAD
 int aleatorio, contl, contc, l, c, i, jogada, atual, invalido, venceu, contador, comando_local;
-=======
-int aleatorio, contl, contc, l, c, i, jogada, atual, erro, cond, contador;
->>>>>>> d5ae0920f3e0252141abb83b1af002375285c172
 int tabuleiro[linhas][colunas];
 char opcao, comando;
 
