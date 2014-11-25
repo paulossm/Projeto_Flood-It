@@ -1,20 +1,42 @@
 #ifndef __flood
 #define __flood
 
-/* --- Tipos definidos --- */
 #define linhas 14
 #define colunas 14
+#define jogadas 25
+#define elementos 6
 
-int aleatorio, contl, contc, l, c, i, jogada, atual, invalido, venceu, contador, comando_local;
-int tabuleiro[linhas][colunas];
+/* --- Variáveis de execução do jogo --- */
+
+typedef struct {
+	int max_lin;
+	int max_col;
+	int max_jogadas;
+	int max_itens;
+}Configuracao;
+
+Configuracao padrao = {linhas,colunas,jogadas,elementos};
+
+typedef enum {
+	Falso,
+	Verdadeiro
+} Booleano;
+
+Booleano vitoria, entrada_invalida;
+
+/* --- Tipos definidos --- */
+int aleatorio, contl, contc, l, c, i, jogada = 0, contador;
+int tabuleiro[colunas][linhas];
+/* --- comandos universais --- */
 char opcao, comando;
+
+/* --- comandos locais --- */
+int atual, comando_local, novo_valor;
 
 /* --- manipulação de arquivos --- */
 
 FILE *arquivo;
 char url[] = "arquivo.txt"; // caminho padrão para salvamento de arquivos
-
-
 
 /* --- Sub-rotinas --- */
 
@@ -52,7 +74,6 @@ void abrir_jogo();
  *
  */
 void inundar();
-
 /* *
  * Realiza a leitura de um jogo salvo
  * @param utilização de l para linhas
@@ -73,5 +94,5 @@ void escrever_matriz(int l, int c);
  * @param utilização de c para colunas
  * @para referencia para o primeiro elemento da matriz
  */
-void percorrer(int L, int C, int referencia);
+void checar_vitoria(int L, int C, int referencia);
 #endif
