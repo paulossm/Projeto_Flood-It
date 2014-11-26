@@ -13,6 +13,7 @@ typedef struct {
 	int max_col;
 	int max_jogadas;
 	int max_itens;
+	int **matriz;
 }Configuracao;
 
 Configuracao padrao = {linhas,colunas,jogadas,elementos};
@@ -62,31 +63,31 @@ void exibir_tabela(int l, int c);
 void novo_jogo();
 
 /* *
- * Realiza a execução de um novo jogo
- *
- *
- */
-void abrir_jogo();
-
-/* *
  * Inundação de valores em toda matriz
- *
- *
+ * @param maxlin é o número máximo de linhas
+ * @param maxcol é o número máximo de colunas
+ * @param **tabuleiro é o ponteiro do ponteiro da matriz
+ * @param l é a linha atual da matriz
+ * @param c é a coluna atual da matriz
+ * @param atual é o valor do atual elemento da matriz
+ * @param novo_valor é o novo valor que será atribuido, se for igual à referencia da matriz
  */
-void inundar();
+int inundar(int maxlin, int maxcol, int **tabuleiro, int l, int c, int atual, int novo_valor);
+
 /* *
  * Realiza a leitura de um jogo salvo
  * @param utilização de l para linhas
  * @param utilização de c para colunas
  */
-void ler_matriz(int l, int c);
+void ler_matriz(int l, int c, int **tabuleiro, int jogada);
 
 /* *
  * Salva a matriz de um jogo
  * @param utilização de l para linhas
  * @param utilização de c para colunas
+ * @param jogada é a jogada atual do jogador
  */
-void escrever_matriz(int l, int c);
+void escrever_matriz(int l, int c, int jogada);
 
 /* *
  * Percorre a matriz de um jogo para verificação de ganho

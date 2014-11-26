@@ -38,12 +38,11 @@ int main( void ){
         novo_jogo();
         partida:
         for(;jogada <= padrao.max_jogadas; jogada++)
-        {
+        {	
             printf("\t\t\tTentativa: %i/%i\n\n\t's' > salvar o jogo atual\n\t'q' > encerrar o jogo\n", jogada, padrao.max_jogadas);
             printf("\tOpção >> ");
             scanf(" %c", &comando);
-            
-            executar((int)comando);
+            executar((int)comando, jogada);
 				
 				if(entrada_invalida){
 					jogada--;
@@ -52,15 +51,17 @@ int main( void ){
 				
 				if(vitoria){
 					printf("\n\n(i) PARABÉNS! Você venceu!\n");
+					free(padrao.matriz);
 					exit(1);
 				}
         }
         printf("\n\n(i) Você perdeu!\n");
+        free(padrao.matriz);
     }
 
     else{
         // Carregar um Jogo Anterior
-        executar((int)opcao);
+        executar((int)opcao, jogada);
         goto partida;
     }
 	return 0;
