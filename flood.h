@@ -1,9 +1,9 @@
 #ifndef __flood
 #define __flood
 
-#define linhas 14
-#define colunas 14
-#define jogadas 25
+#define linhas 18
+#define colunas 18
+#define jogadas 30
 #define elementos 6
 
 /* --- Variáveis de execução do jogo --- */
@@ -13,10 +13,9 @@ typedef struct {
 	int max_col;
 	int max_jogadas;
 	int max_itens;
-	int **matriz;
 }Configuracao;
 
-Configuracao padrao = {linhas,colunas,jogadas,elementos};
+Configuracao padrao = {18,18,25,6};
 
 typedef enum {
 	Falso,
@@ -26,8 +25,8 @@ typedef enum {
 Booleano vitoria, entrada_invalida;
 
 /* --- Tipos definidos --- */
-int aleatorio, contl, contc, l, c, i, jogada = 0, contador;
-int tabuleiro[colunas][linhas];
+int aleatorio, contl, contc, l, line, c, column, i, jogada = 0, contador;
+int tabuleiro[linhas][colunas];
 /* --- comandos universais --- */
 char opcao, comando;
 
@@ -64,30 +63,23 @@ void novo_jogo();
 
 /* *
  * Inundação de valores em toda matriz
- * @param maxlin é o número máximo de linhas
- * @param maxcol é o número máximo de colunas
- * @param **tabuleiro é o ponteiro do ponteiro da matriz
- * @param l é a linha atual da matriz
- * @param c é a coluna atual da matriz
- * @param atual é o valor do atual elemento da matriz
- * @param novo_valor é o novo valor que será atribuido, se for igual à referencia da matriz
+ *
+ *
  */
-int inundar(int maxlin, int maxcol, int **tabuleiro, int l, int c, int atual, int novo_valor);
-
+void inundar(int line, int column, int atual, int novo_valor);
 /* *
  * Realiza a leitura de um jogo salvo
  * @param utilização de l para linhas
  * @param utilização de c para colunas
  */
-void ler_matriz(int l, int c, int **tabuleiro, int jogada);
+void ler_matriz();
 
 /* *
  * Salva a matriz de um jogo
  * @param utilização de l para linhas
  * @param utilização de c para colunas
- * @param jogada é a jogada atual do jogador
  */
-void escrever_matriz(int l, int c, int jogada);
+void escrever_matriz(int l, int c);
 
 /* *
  * Percorre a matriz de um jogo para verificação de ganho

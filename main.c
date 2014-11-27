@@ -19,12 +19,12 @@
 #include "flood.c"
 
 int main( void ){
-	printf("******************************\n\n");
-	printf("*** *   **** **** ***    * ***\n");
-	printf("*   *   *  * *  * *  *   *  *\n");
-	printf("**  *   *  * *  * *  *   *  *\n");
-	printf("*   *** **** **** ***    *  *");
-	printf("\n\n******************************");
+	printf("\t******************************\n\n");
+	printf("\t*** *   **** **** ***    * ***\n");
+	printf("\t*   *   *  * *  * *  *   *  *\n");
+	printf("\t**  *   *  * *  * *  *   *  *\n");
+	printf("\t*   *** **** **** ***    *  *");
+	printf("\n\n\t******************************");
 	printf("\n\n\t'n' > Novo Jogo\n\t'o' > Carregar Jogo\n");
 
 	do
@@ -38,11 +38,12 @@ int main( void ){
         novo_jogo();
         partida:
         for(;jogada <= padrao.max_jogadas; jogada++)
-        {	
-            printf("\t\t\tTentativa: %i/%i\n\n\t's' > salvar o jogo atual\n\t'q' > encerrar o jogo\n", jogada, padrao.max_jogadas);
+        {
+            printf("\n\t\t\tTentativa: %i/%i\n\n\t's' > salvar o jogo atual\n\t'q' > encerrar o jogo\n", jogada, padrao.max_jogadas);
             printf("\tOpção >> ");
             scanf(" %c", &comando);
-            executar((int)comando, jogada);
+            
+            executar((int)comando);
 				
 				if(entrada_invalida){
 					jogada--;
@@ -50,18 +51,16 @@ int main( void ){
 				}
 				
 				if(vitoria){
-					printf("\n\n(i) PARABÉNS! Você venceu!\n");
-					free(padrao.matriz);
+					printf("\n\n\t(i) PARABÉNS! Você venceu!\n");
 					exit(1);
 				}
         }
-        printf("\n\n(i) Você perdeu!\n");
-        free(padrao.matriz);
+        printf("\n\n\t(i) Você perdeu!\n");
     }
 
     else{
         // Carregar um Jogo Anterior
-        executar((int)opcao, jogada);
+        executar((int)opcao);
         goto partida;
     }
 	return 0;

@@ -5,7 +5,6 @@
 
 void novo_jogo()
 {
-	
 	unsigned char dificuldade;
 		    printf("\n\tSelecione a Dificuldade:\n");
 		    printf("\t1 - Fácil\n");
@@ -15,53 +14,45 @@ void novo_jogo()
 		    scanf(" %c", &dificuldade);
 
 		    switch((int)dificuldade){
-                case 49:
+                case 49:                //comando 1
                     padrao.max_col = 10;
                     padrao.max_lin = 10;
                     padrao.max_jogadas = 20;
                     padrao.max_itens = 6;
                     break;
-                case 50:
+                case 50:                //comando 2
                     padrao.max_col = 14;
                     padrao.max_lin = 14;
                     padrao.max_jogadas = 25;
                     padrao.max_itens = 6;
                     break;
-                case 51:
+                case 51:                //comando 3
                     padrao.max_col = 18;
                     padrao.max_lin = 18;
                     padrao.max_jogadas = 30;
                     padrao.max_itens = 6;
                     break;
-                default:
+                default:                //comando inválido
                     printf("Comando inválido!\n");
                     novo_jogo();
                     break;
                 }
-					system("clear");
+					system("clear"); //limprar promt antes da exibição da partida
 					printf("\n\n(i)Preencha o tabuleiro com um único valor entre 0 - 5 começando pelo canto superior esquerdo. Você tem %i tentativas. Boa Sorte!\n", padrao.max_jogadas);
-					gerar_tabela(padrao.max_lin, padrao.max_col);
-					exibir_tabela(padrao.max_lin, padrao.max_col);
+					gerar_tabela(padrao.max_lin, padrao.max_col); //Criação da tabela
+					exibir_tabela(padrao.max_lin, padrao.max_col); //Exibição da tabela
+	
 }
 
 void gerar_tabela(int l, int c)
 {
-	padrao.matriz = (int **) malloc(l * sizeof(int));
-	if(padrao.matriz == NULL)
-	{
-		printf("(!)ERRO: Sem memória disponível para execução do Programa! :(\n");
-		printf("(!)O jogo está sendo encerrado...\n");
-		exit(1);
-	}
 	srand( (unsigned)time(NULL) );
 	for(contl = 0; contl < l; contl++)
 	{
-		*(padrao.matriz + contl) = (int *) malloc(c * sizeof(int));
-		
 		for(contc = 0; contc < c; contc++)
 		{
 			aleatorio = (rand() % padrao.max_itens);
-			padrao.matriz[contl][contc] = aleatorio;
+			tabuleiro[contl][contc] = aleatorio;
 		}
 	}
 }
@@ -71,50 +62,55 @@ void exibir_tabela(int l, int c){
 		printf("\n");
 		printf("\t\t\t");
 		for(contc = 0; contc < c; contc++){
-			printf("%i ", padrao.matriz[contl][contc]);
+			printf("%i ", tabuleiro[contl][contc]);
 		}
 	}
-	printf("\n");
 }
 
-void ler_matriz(int l, int c, int **tabuleiro, int jogada)
-{
-    arquivo = fopen(url,"r");
-
+void ler_matriz(){
+    arquivo = fopen(url,"r+");
     if(arquivo != NULL)
     {
-        for(contl = 0; contl < l; contl++)
+		fscanf(arquivo,"%i ", &padrao.max_lin);
+		fscanf(arquivo,"%i ", &padrao.max_col);
+		fscanf(arquivo,"%i ", &padrao.max_jogadas);
+		fscanf(arquivo,"\n");
+        for(contl = 0; contl < padrao.max_lin; contl++)
         {
-            for(contc = 0; contc < c; contc++)
+            for(contc = 0; contc < padrao.max_col; contc++)
             {
-				printf("%i ", contl * l + contc);
-				fscanf(arquivo,"%d", *(tabuleiro+(contl * l + contc)));
-                if(contc < c-1)
+				fscanf(arquivo,"%d", &tabuleiro[contl][contc]);
+                if(contc < padrao.max_col)
 					fscanf(arquivo," ");
 				else
-					fscanf(arquivo,"\n"); 
+					fscanf(arquivo,"\n");
             }
         }
-        fscanf(arquivo,"%d", &jogada);
+        fscanf(arquivo,"%i", &jogada);
 			fclose(arquivo);
         }
     else
     {
-    printf("\n(i)Erro ao abrir o arquivo texto para leitura. Verifique se o arquivo ou diretório existem.\n");
-    printf("(i)O jogo será encerrado...\n");
+    printf("\n\t(X)Erro ao abrir o arquivo texto para leitura. Verifique se o arquivo ou diretório existem.\n");
+    printf("\t(!)O jogo será encerrado...\n");
     exit(1);
     }
+
 }
 
-void escrever_matriz(int l, int c, int jogada){
+void escrever_matriz(int l, int c){
     arquivo = fopen(url,"w+");
       if(arquivo != NULL)
       {
+		fprintf(arquivo,"%i ",padrao.max_lin);
+		fprintf(arquivo,"%i ",padrao.max_col);
+		fprintf(arquivo,"%i ",padrao.max_jogadas);
+		fprintf(arquivo,"\n");
         for(contl = 0; contl < l; contl++)
         {
             for(contc = 0; contc < c; contc++)
             {
-                fprintf(arquivo,"%d", padrao.matriz[contl][contc]);
+                fprintf(arquivo,"%d",tabuleiro[contl][contc]);
                 if(contc < c-1)
 					fprintf(arquivo," ");
 				else
@@ -123,12 +119,12 @@ void escrever_matriz(int l, int c, int jogada){
         }
 		fprintf(arquivo,"%d", jogada);
         fclose(arquivo);
-        printf("\n\t(i)Partida salva com sucesso!");
+        printf("\n\t(!)Partida salva com sucesso!");
       }
       else
       {
-        printf("\t(i)Erro ao abrir o arquivo texto para escrita.\n");
-        printf("\t(i)O jogo será encerrado...\n");
+        printf("\t(X)Erro ao abrir o arquivo texto para escrita.\n");
+        printf("\t(!)O jogo será encerrado...\n");
         exit(1);
       }
 }
@@ -140,7 +136,7 @@ void checar_vitoria(int l, int c, int referencia)
 	{
 		for(contc=0; contc < c; contc++)
 		{
-			if(padrao.matriz[contl][contc] == referencia)
+			if(tabuleiro[contl][contc] == referencia)
 				contador++;
 		}
 	}
@@ -153,68 +149,66 @@ void checar_vitoria(int l, int c, int referencia)
 void carregarJogo()
 {
 	int comando_local;
-	printf("\n(i) Qual partida deseja carregar?\n");
+	printf("\n\t(!) Qual partida deseja carregar?\n");
 	printf("\n\t'1' > abrir última partida salva na pasta padrão local\n\t'0' > definir um endereço de um arquivo\n\n");
 	printf("\tOpção >> ");
-	scanf("%d", &comando_local);
-	if(comando_local){
-		ler_matriz(padrao.max_lin, padrao.max_col, padrao.matriz, jogada);
+	scanf("%i", &comando_local);
+	if(comando_local==1){
+		ler_matriz();
 		exibir_tabela(padrao.max_lin, padrao.max_col);
 	}
 	else {
-		printf("\n(i)Digite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/floodit.txt'\n");
+		printf("\n\t(!)Digite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/floodit.txt'\n\t");
 		scanf(" %s", url);
-		ler_matriz(padrao.max_lin, padrao.max_col, padrao.matriz, jogada);
+		ler_matriz();
 		exibir_tabela(padrao.max_lin, padrao.max_col);
 	}
-	printf("\n");
 }
 
 void encerrarJogo()
 {
-	printf("\n\t(i)O jogo está sendo encerrado...\n");
+	printf("\n\t(!)O jogo está sendo encerrado...\n");
 	exit(1);
 }
-void salvarJogo(int jogada)
+void salvarJogo()
 {
 	int comando;
-	printf("\n(i) Onde você deseja salvar o arquivo do jogo?\n");
-	printf("'1' salvar na pasta padrão local - '0' definir um endereço\n");
-	printf("seu comando: ");
+	printf("\n\t(!) Onde você deseja salvar o arquivo do jogo?\n");
+	printf("\t'1' salvar na pasta padrão local - '0' definir um endereço\n");
+	printf("\topção >> ");
 	scanf("%d", &comando);
 		if(comando){
-			escrever_matriz(padrao.max_lin, padrao.max_col, jogada);
-			printf("\nO jogo está sendo encerrado...\n");
+			escrever_matriz(padrao.max_lin, padrao.max_col);
+			printf("\n\t(!)O jogo está sendo encerrado...\n");
 			exit(1);
 		}
 		else {
-			printf("\nDigite um caminho para guardar o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n");
+			printf("\n\tDigite um caminho para guardar o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n\t");
 			scanf("%s", url);
-			escrever_matriz(padrao.max_lin, padrao.max_col, jogada);
-			printf("\nO jogo está sendo encerrado...\n");
+			escrever_matriz(padrao.max_lin, padrao.max_col);
+			printf("\n\t(!)O jogo está sendo encerrado...\n");
 			exit(1);
 		}
 }
 
-int inundar(int maxlin, int maxcol, int **tabuleiro, int l, int c, int atual, int novo_valor){
-	if(c >= maxcol || l >= maxlin || l < 0 || c < 0) return 0;
-
-	if(tabuleiro[l][c] == atual && novo_valor != atual)
+void inundar(int line, int column, int atual, int novo_valor)
+{
+	if(column >= padrao.max_col || line >= padrao.max_lin || line < 0 || column < 0) return;
+	if(tabuleiro[line][column] == atual && novo_valor != atual)
 	{
-		tabuleiro[l][c] = novo_valor;
-        inundar(maxlin, maxcol, tabuleiro, l, c+1, atual, novo_valor);
-		inundar(maxlin, maxcol, tabuleiro, l+1, c, atual, novo_valor);
-        inundar(maxlin, maxcol, tabuleiro, l-1, c, atual, novo_valor);
-        inundar(maxlin, maxcol, tabuleiro, l, c-1, atual, novo_valor);
+		tabuleiro[line][column] = novo_valor;
+		inundar(line, column+1, atual, novo_valor);
+		inundar(line+1, column, atual, novo_valor);
+		inundar(line-1, column, atual, novo_valor);
+        inundar(line, column-1, atual, novo_valor);
 	}
-	return 0;
 }
 
-void executar(int comando, int jogada)
+void executar(int comando)
 {
 	if(comando - 48 >= 0 && comando - 48 <= padrao.max_itens)
 	{
-		inundar(padrao.max_lin, padrao.max_col, padrao.matriz, 0, 0, padrao.matriz[0][0], comando - 48);
+		inundar(0, 0, tabuleiro[0][0], comando - 48);
 		checar_vitoria(padrao.max_lin, padrao.max_col, comando - 48);
 		printf("\n");
 		exibir_tabela(padrao.max_lin, padrao.max_col);
@@ -225,9 +219,9 @@ void executar(int comando, int jogada)
 		{
 			case 111: carregarJogo(); break;
 			case 113: encerrarJogo();
-			case 115: salvarJogo(jogada);
+			case 115: salvarJogo();
 			default:
-			printf("\n\t(i) opção inválida. tente novamente\n");
+			printf("\n\t(X) Opção inválida. tente novamente\n");
 			exibir_tabela(padrao.max_lin, padrao.max_col);
 			entrada_invalida = Verdadeiro;
 			break;
