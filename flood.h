@@ -63,8 +63,10 @@ void novo_jogo();
 
 /* *
  * Inundação de valores em toda matriz
- *
- *
+ * @param utilização de line para linhas
+ * @param utilização column para colunas
+ * @param utilização atual para a cor da jogada anterior
+ * @param utilização novo_valor para a cor da jogada atual
  */
 void inundar(int line, int column, int atual, int novo_valor);
 /* *
