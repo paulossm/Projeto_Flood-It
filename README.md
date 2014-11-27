@@ -1,17 +1,17 @@
 ================
 PROJETO DO SIMULADOR DO GAME "FLOOD IT" EM LINGUAGEM "C".
 ================
-
-
-Autores
 ______________________
 
-Elivelton Costa Silva
-Paulo Sergio Silva de Mendonça
+Autores
 
-#Descrição do que foi feito >>
+Elivelton Costa Silva,
+Paulo Sergio Silva de Mendonça.
+______________________
 
-	 Modularização do Programa:
+#Descrição do que foi feito:
+
+	> Modularização do Programa:
 		1. main.c - método principal.
 		2. flood.c - implementação das sub-rotinas responsáveis pelo funcionamento do jogo.
 		3. flood.h - cabeçalho onde consta as definições. nele são declaradas variáveis, sub-rotinas e toda a estrutura necessária para a implementação do jogo assim como a inclusão das bibliotecas necessárias.
