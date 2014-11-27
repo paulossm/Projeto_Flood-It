@@ -15,7 +15,7 @@ typedef struct {
 	int max_itens;
 }Configuracao;
 
-Configuracao padrao = {18,18,25,6};
+Configuracao padrao = {18,18,30,6};
 
 typedef enum {
 	Falso,
