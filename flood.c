@@ -4,8 +4,10 @@
 #include <time.h>
 
 void novo_jogo()
-{
-	unsigned char dificuldade;
+{           /*Definição de qual nível de dificuldade escolhida
+             *Atribuindo valores de linhas, colunas, itens, jogadas
+             */
+            unsigned char dificuldade;
 		    printf("\n\tSelecione a Dificuldade:\n");
 		    printf("\t1 - Fácil\n");
 		    printf("\t2 - Normal\n");
@@ -41,84 +43,90 @@ void novo_jogo()
 					printf("\n\n(i)Preencha o tabuleiro com um único valor entre 0 - 5 começando pelo canto superior esquerdo. Você tem %i tentativas. Boa Sorte!\n", padrao.max_jogadas);
 					gerar_tabela(padrao.max_lin, padrao.max_col); //Criação da tabela
 					exibir_tabela(padrao.max_lin, padrao.max_col); //Exibição da tabela
-	
-}
 
+}
+/*Criação de uma matriz com os valores estabelecidados em dificuldade
+*/
 void gerar_tabela(int l, int c)
 {
-	srand( (unsigned)time(NULL) );
-	for(contl = 0; contl < l; contl++)
+	srand( (unsigned)time(NULL) ); //função para a criação de um número aleatório
+	for(contl = 0; contl < l; contl++) //for para linhas
 	{
-		for(contc = 0; contc < c; contc++)
+		for(contc = 0; contc < c; contc++) //for para colunas
 		{
-			aleatorio = (rand() % padrao.max_itens);
-			tabuleiro[contl][contc] = aleatorio;
+			aleatorio = (rand() % padrao.max_itens); //criação de um valor aleatório
+			tabuleiro[contl][contc] = aleatorio; //Atribuição de um valor aleatório ao elemento da matriz
 		}
 	}
 }
-
+/*Exibição da matriz com os valor estabelecidos em dificuldade
+*/
 void exibir_tabela(int l, int c){
-	for(contl = 0; contl < l; contl++){
-		printf("\n");
-		printf("\t\t\t");
-		for(contc = 0; contc < c; contc++){
-			printf("%i ", tabuleiro[contl][contc]);
+	for(contl = 0; contl < l; contl++){ //contador de linhas
+		printf("\n");   //quebra de linha
+		printf("\t\t\t"); //tabulações
+		for(contc = 0; contc < c; contc++){ //contador de colunas
+			printf("%i ", tabuleiro[contl][contc]); //exibindo o valor de um determinado elemento
 		}
 	}
 }
 
+/*Leitura de matriz a partir de um arquivo txt
+*/
 void ler_matriz(){
-    arquivo = fopen(url,"r+");
-    if(arquivo != NULL)
+    arquivo = fopen(url,"r+"); //abertura do arquivo
+    if(arquivo != NULL) //Se existir tal aquivo o if será acionado
     {
-		fscanf(arquivo,"%i ", &padrao.max_lin);
-		fscanf(arquivo,"%i ", &padrao.max_col);
-		fscanf(arquivo,"%i ", &padrao.max_jogadas);
+		fscanf(arquivo,"%i ", &padrao.max_lin); //leitura do valor de linhas
+		fscanf(arquivo,"%i ", &padrao.max_col); //leitura do valor de colunas
+		fscanf(arquivo,"%i ", &padrao.max_jogadas); //leitura do valor de jogadas
 		fscanf(arquivo,"\n");
-        for(contl = 0; contl < padrao.max_lin; contl++)
+        for(contl = 0; contl < padrao.max_lin; contl++) //contador de linhas
         {
-            for(contc = 0; contc < padrao.max_col; contc++)
+            for(contc = 0; contc < padrao.max_col; contc++) //contador de colunas
             {
-				fscanf(arquivo,"%d", &tabuleiro[contl][contc]);
+				fscanf(arquivo,"%d", &tabuleiro[contl][contc]); //leitura do valor d eum determinado elemento da matriz salva
                 if(contc < padrao.max_col)
-					fscanf(arquivo," ");
+					fscanf(arquivo," "); //espaçamento entre elementos
 				else
-					fscanf(arquivo,"\n");
+					fscanf(arquivo,"\n"); //se for o ultimo elemento de uma coluna terá uma quebra de linhas
             }
         }
-        fscanf(arquivo,"%i", &jogada);
-			fclose(arquivo);
+        fscanf(arquivo,"%i", &jogada); //leitura do valor de jogadas
+			fclose(arquivo); //fechamento de arquivo
         }
-    else
+    else //Se não exitir arquivo
     {
     printf("\n\t(X)Erro ao abrir o arquivo texto para leitura. Verifique se o arquivo ou diretório existem.\n");
     printf("\t(!)O jogo será encerrado...\n");
-    exit(1);
+    exit(1); //saída do jogo
     }
 
 }
 
+/*Salvar jogo em um arquivo txt
+*/
 void escrever_matriz(int l, int c){
-    arquivo = fopen(url,"w+");
+    arquivo = fopen(url,"w+"); //abertura do arquivo
       if(arquivo != NULL)
       {
 		fprintf(arquivo,"%i ",padrao.max_lin);
 		fprintf(arquivo,"%i ",padrao.max_col);
 		fprintf(arquivo,"%i ",padrao.max_jogadas);
 		fprintf(arquivo,"\n");
-        for(contl = 0; contl < l; contl++)
+        for(contl = 0; contl < l; contl++) //contador de linhas
         {
-            for(contc = 0; contc < c; contc++)
+            for(contc = 0; contc < c; contc++) //contador de colunas
             {
-                fprintf(arquivo,"%d",tabuleiro[contl][contc]);
+                fprintf(arquivo,"%d",tabuleiro[contl][contc]); //Salvando valor do determinado elemento da matriz
                 if(contc < c-1)
-					fprintf(arquivo," ");
+					fprintf(arquivo," "); //espaçamento entre elementos
 				else
-					fprintf(arquivo,"\n");
+					fprintf(arquivo,"\n"); //se for o ultimo elemento de uma coluna terá uma quebra de linhas
             }
         }
-		fprintf(arquivo,"%d", jogada);
-        fclose(arquivo);
+		fprintf(arquivo,"%d", jogada); //Salvamento do valor de jogadas
+        fclose(arquivo); //fechando arquivo
         printf("\n\t(!)Partida salva com sucesso!");
       }
       else
@@ -128,24 +136,27 @@ void escrever_matriz(int l, int c){
         exit(1);
       }
 }
-
+/*Verificação periodica de vitória
+*/
 void checar_vitoria(int l, int c, int referencia)
 {
 	int contador = 0;
-	for(contl = 0; contl < l; contl++)
+	for(contl = 0; contl < l; contl++) //contador linha
 	{
-		for(contc=0; contc < c; contc++)
+		for(contc=0; contc < c; contc++) //contadot coluna
 		{
-			if(tabuleiro[contl][contc] == referencia)
-				contador++;
+			if(tabuleiro[contl][contc] == referencia) //Determinado elemento da matriz for igual ao primeiro elemento da matriz
+				contador++; //atribuição de valor na variável contador
 		}
 	}
-    if(contador == (padrao.max_lin * padrao.max_col))
-        vitoria = Verdadeiro; // verdadeiro
-    else
-        vitoria = Falso; // falso
-}
 
+    if(contador == (padrao.max_lin * padrao.max_col)) //verificação de elementos completando a matriz ao total de elementos
+        vitoria = Verdadeiro; // Ganhou jogo
+    else
+        vitoria = Falso; // Ainda não ganhou jogo
+}
+/*Objetivo de abrir um jogo que foi salvo em um arquivo txt
+*/
 void carregarJogo()
 {
 	int comando_local;
@@ -153,77 +164,84 @@ void carregarJogo()
 	printf("\n\t'1' > abrir última partida salva na pasta padrão local\n\t'0' > definir um endereço de um arquivo\n\n");
 	printf("\tOpção >> ");
 	scanf("%i", &comando_local);
-	if(comando_local==1){
-		ler_matriz();
-		exibir_tabela(padrao.max_lin, padrao.max_col);
+	if(comando_local==1){ //Abertura de um arquivo na pasta local do jogo
+		ler_matriz(); //Leitura da matriz salva
+		exibir_tabela(padrao.max_lin, padrao.max_col); //Exibição da matriz
 	}
-	else {
+	else { //abertura de um arquivo com endereço determinado
 		printf("\n\t(!)Digite um caminho para abrir o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/floodit.txt'\n\t");
-		scanf(" %s", url);
-		ler_matriz();
-		exibir_tabela(padrao.max_lin, padrao.max_col);
+		scanf(" %s", url); //Determinado endereço do arquivo
+		ler_matriz(); //Leitura da matriz salva
+		exibir_tabela(padrao.max_lin, padrao.max_col); //Exibição da matriz
 	}
 }
 
+/* encerramento de jogo*/
 void encerrarJogo()
 {
 	printf("\n\t(!)O jogo está sendo encerrado...\n");
-	exit(1);
+	exit(1); //Saída jogo
 }
+
+/*Salvar jogo */
 void salvarJogo()
 {
 	int comando;
 	printf("\n\t(!) Onde você deseja salvar o arquivo do jogo?\n");
 	printf("\t'1' salvar na pasta padrão local - '0' definir um endereço\n");
 	printf("\topção >> ");
-	scanf("%d", &comando);
-		if(comando){
-			escrever_matriz(padrao.max_lin, padrao.max_col);
+	scanf("%d", &comando); //Escolha do local onde será salvo o arquivo txt
+		if(comando){ //Pasta local
+			escrever_matriz(padrao.max_lin, padrao.max_col); //Escrita da matriz
 			printf("\n\t(!)O jogo está sendo encerrado...\n");
-			exit(1);
+			exit(1); //saída do jogo
 		}
-		else {
+		else { //Determinando endereço
 			printf("\n\tDigite um caminho para guardar o arquivo da jogada. Ex: 'C:/Usuario/Meus Documentos/arquivo.txt'\n\t");
-			scanf("%s", url);
-			escrever_matriz(padrao.max_lin, padrao.max_col);
+			scanf("%s", url); //Atribuição do endereço do arquivo txt
+			escrever_matriz(padrao.max_lin, padrao.max_col);//Escrita da matriz
 			printf("\n\t(!)O jogo está sendo encerrado...\n");
-			exit(1);
+			exit(1); //saída do jogo
 		}
 }
 
+/*Função recursiva com objetivo de deixar matriz com uma única cor(número)
+*/
 void inundar(int line, int column, int atual, int novo_valor)
 {
-	if(column >= padrao.max_col || line >= padrao.max_lin || line < 0 || column < 0) return;
-	if(tabuleiro[line][column] == atual && novo_valor != atual)
+	if(column >= padrao.max_col || line >= padrao.max_lin || line < 0 || column < 0) return 0; //Elementos fora da matriz
+
+	if(tabuleiro[line][column] == atual && novo_valor != atual) //verificação de determinando elemento da matriz é igual ao primeiro elemento. Verificação se a cor(número) não é igual à jogada anterior
 	{
-		tabuleiro[line][column] = novo_valor;
+		tabuleiro[line][column] = novo_valor; //Determinado elemento da matriz recebendo novo valor da jogada atual
 		inundar(line, column+1, atual, novo_valor);
 		inundar(line+1, column, atual, novo_valor);
 		inundar(line-1, column, atual, novo_valor);
         inundar(line, column-1, atual, novo_valor);
 	}
 }
-
+/*Painel de controle do jogo
+*/
 void executar(int comando)
 {
 	if(comando - 48 >= 0 && comando - 48 <= padrao.max_itens)
 	{
-		inundar(0, 0, tabuleiro[0][0], comando - 48);
-		checar_vitoria(padrao.max_lin, padrao.max_col, comando - 48);
+		inundar(0, 0, tabuleiro[0][0], comando - 48); //Imundar matriz
+		checar_vitoria(padrao.max_lin, padrao.max_col, comando - 48); //Verificando vitória
 		printf("\n");
-		exibir_tabela(padrao.max_lin, padrao.max_col);
+		exibir_tabela(padrao.max_lin, padrao.max_col); //Exibição de tabela
 	}
 	else
 	{
 		switch( comando )
 		{
-			case 111: carregarJogo(); break;
-			case 113: encerrarJogo();
-			case 115: salvarJogo();
+			case 111: carregarJogo(); break; //Carregamento da jogada anterior
+			case 113: encerrarJogo(); //Encerrando jogo
+			case 115: salvarJogo(); //salvamento do jogo
 			default:
 			printf("\n\t(X) Opção inválida. tente novamente\n");
-			exibir_tabela(padrao.max_lin, padrao.max_col);
-			entrada_invalida = Verdadeiro;
+			exibir_tabela(padrao.max_lin, padrao.max_col); //exibição da matriz
+			entrada_invalida = Verdadeiro; //A entrada foi inválida
 			break;
 		}
 	}
